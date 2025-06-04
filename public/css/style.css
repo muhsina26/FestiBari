@@ -1,0 +1,233 @@
+   * {
+        box-sizing: border-box;
+    }
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+/* Navbar */
+/* NAVBAR Enhancements */
+/* NAVBAR — Enhanced Glass & Glow Style */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(17, 17, 17, 0.6); /* transparent black */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: fixed;
+    top: 0;
+    flex-wrap:wrap;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 64, 129, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 64, 129, 0.15);
+}
+
+.navbar .logo a {
+    color: #ff4081;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.navbar .logo a:hover {
+    text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar .nav-links li a {
+    color: #f5f5f5;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    position: relative;
+}
+
+.navbar .nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: #ff4081;
+    transition: width 0.3s ease;
+}
+
+.navbar .nav-links li a:hover::after {
+    width: 100%;
+}
+
+.navbar .nav-links li a:hover {
+    color: #ff4081;
+    text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('/images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    color: #fff;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-text {
+    text-align: center;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+.hero-text p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+.btn {
+    background-color: #e91e63;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: #c2185b;
+    box-shadow: 0 0 10px #ff4081cc;
+}
+
+/* Countdown */
+.countdown {
+    text-align: center;
+    margin: 40px 0;
+    color: #ff6600;
+    font-weight: 600;
+}
+
+#timer {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+/* Highlights */
+.highlights {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #111;
+}
+
+.highlights h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.highlight-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    width: 250px;
+    transition: transform 0.3s, box-shadow 0.4s;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 20px #ff4081cc;
+    border: 1px solid #ff408155;
+}
+
+
+.card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: brightness(1.2);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #ff4081;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+/* CTA */
+.cta {
+    background-color: #1a1a1a;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 2px solid #333;
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.cta p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.cta .btn {
+    background-color: #00bcd4;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.cta .btn:hover {
+    background-color: #0097a7;
+    box-shadow: 0 0 10px #00bcd4aa;
+}
