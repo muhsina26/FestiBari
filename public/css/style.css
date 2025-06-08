@@ -14,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: rgba(17, 17, 17, 0.6); /* transparent black */
+    background: rgba(17, 17, 17, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     position: fixed;
@@ -231,3 +231,125 @@
     background-color: #0097a7;
     box-shadow: 0 0 10px #00bcd4aa;
 }
+/* ===== Explore Page Styles ===== */
+.explore-hero {
+    background: url('/images/explore-banner.jpg') center/cover no-repeat;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.explore-hero .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.filters {
+    background-color: #111;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.filters input,
+.filters select {
+    padding: 0.5rem 1rem;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+.festival-grid {
+    padding: 3rem 2rem;
+    background: #0b0b0b;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.festival-card {
+    background: #1a1a1a;
+    border-radius: 16px;
+    overflow: hidden;
+    width: 280px; /* Reduce width */
+    max-height: 420px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+}
+
+.festival-info h3 {
+    font-size: 1.1rem;
+    margin: 0.4rem 0;
+}
+
+.festival-info p {
+    font-size: 0.85rem;
+    margin: 0.2rem 0;
+}
+
+
+.festival-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff4081cc;
+    border: 1px solid #ff408155;
+}
+
+.festival-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.festival-info {
+    padding: 1rem 1.2rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    font-size: 0.85rem; 
+}
+
+
+
+.festival-info .btn {
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    background-color: #e91e63;
+    color: white;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    width: fit-content;
+    transition: 0.3s;
+}
+
+
+.festival-info .btn:hover {
+    background: #ff4081
+}
+
+/* .festival-stories {
+    background: #111;
+    padding: 3rem 2rem;
+    color: white;
+    text-align: center;
+} */
