@@ -17,3 +17,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+
+Route::view('/submit','submit')->name('submit');
+Route::view('/contact', 'contact')->name('contact');
