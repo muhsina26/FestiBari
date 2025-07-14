@@ -1,0 +1,238 @@
+.auth-hero {
+    background: url('/images/bg.jpg') center/cover no-repeat;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 70px 20px;
+    box-sizing: border-box;
+}
+
+.auth-form-container {
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(255, 64, 129, 0.3);
+    box-shadow: 0 0 30px rgba(255, 64, 129, 0.3);
+    transition: all 0.4s ease;
+}
+
+.auth-form-container:hover {
+    box-shadow: 0 0 40px rgba(255, 64, 129, 0.5);
+    border: 1px solid rgba(255, 64, 129, 0.5);
+}
+
+.auth-form h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+}
+
+.input-icon {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-icon i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff4081;
+}
+
+.input-icon input {
+    width: 100%;
+    padding: 0.9rem 1.2rem 0.9rem 45px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.input-icon input:focus {
+    outline: none;
+    border-color: #ff4081;
+    box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+    gap: 12px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+.forgot-password {
+    color: #ff4081;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: text-shadow 0.3s;
+}
+
+.forgot-password:hover {
+    text-shadow: 0 0 8px #ff4081;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    background: linear-gradient(45deg, #e91e63, #ff4081);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.divider {
+    text-align: center;
+    margin-top: 0.3rem;
+}
+
+.social-auth {
+    display: flex;
+    gap: 1rem;
+    margin: 0.3rem 0 1.5rem;
+}
+
+.social-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: rgba(34, 34, 34, 0.8);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+}
+
+.social-btn.google:hover {
+    border-color: #DB4437;
+    box-shadow: 0 5px 15px rgba(219, 68, 55, 0.3);
+}
+
+.social-btn.facebook:hover {
+    border-color: #4267B2;
+    box-shadow: 0 5px 15px rgba(66, 103, 178, 0.3);
+}
+
+.auth-footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+.auth-footer a {
+    color: #ff4081;
+    text-decoration: none;
+    transition: text-shadow 0.3s;
+}
+
+.auth-footer a:hover {
+    text-shadow: 0 0 8px #ff4081;
+}
+
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-label {
+    display: block;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.input-icon input {
+    padding: 0.9rem 1.2rem 0.9rem 45px;
+}
+
+.input-icon i {
+    color: #ff4081;
+}
+
+.terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 1.5rem 0;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.terms a {
+    color: #ff4081;
+    text-decoration: none;
+    transition: text-shadow 0.3s;
+}
+
+.terms a:hover {
+    text-shadow: 0 0 8px #ff4081;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+    color: #777;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background: rgba(255, 64, 129, 0.15);
+}
+
+.auth-divider::before {
+    left: 0;
+}
+
+.auth-divider::after {
+    right: 0;
+}
