@@ -9,3 +9,11 @@ Route::get('/', function () {
 Route::get('/explore', function () {
     return view('explore');
 });
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
