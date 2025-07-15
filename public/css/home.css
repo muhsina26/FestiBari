@@ -1,0 +1,106 @@
+/* ===== Countdown Section ===== */
+
+.countdown {
+    text-align: center;
+    margin: 40px 0;
+    color: #ff6600;
+    font-weight: 600;
+}
+
+#timer {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+
+/* ===== Highlights Section ===== */
+.highlights {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #111;
+}
+
+.highlights h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.highlight-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    width: 250px;
+    transition: transform 0.3s, box-shadow 0.4s;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 20px #ff4081cc;
+    border: 1px solid #ff408155;
+}
+
+.card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: brightness(1.2);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #ff4081;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+/* ===== CTA Section ===== */
+.cta {
+    background-color: #1a1a1a;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 2px solid #333;
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.cta p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.cta .btn {
+    background-color: #00bcd4;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.cta .btn:hover {
+    background-color: #0097a7;
+    box-shadow: 0 0 10px #00bcd4aa;
+}
