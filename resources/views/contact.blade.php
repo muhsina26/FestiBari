@@ -18,7 +18,7 @@
 </section>
 
 <!-- Contact Form Section -->
-<section class="submit-form-section">
+<section class="submit-form-section"> 
     <div class="form-container">
         <h2 class="form-title">Get In Touch</h2>
         <form>
