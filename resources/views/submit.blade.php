@@ -1,3 +1,4 @@
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
 @endpush
@@ -58,9 +59,57 @@
                 <textarea id="description" class="form-textarea" placeholder="Briefly describe the festival..." required></textarea>
             </div>
 
+             <div class="subevents-section">
+                <h3 class="form-title">Subevents (Optional)</h3>
+                <div class="subevent">
+                    <div class="form-group">
+                        <label for="subevent-time-1" class="form-label">Time</label>
+                        <input type="text" id="subevent-time-1" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
+                    </div>
+                    <div class="form-group">
+                        <label for="subevent-title-1" class="form-label">Title</label>
+                        <input type="text" id="subevent-title-1" class="form-input" placeholder="e.g., Cultural Program">
+                    </div>
+                    <div class="form-group">
+                        <label for="subevent-desc-1" class="form-label">Description</label>
+                        <textarea id="subevent-desc-1" class="form-textarea" placeholder="Description of the subevent..."></textarea>
+                    </div>
+                </div>
+                <button type="button" class="secondary-btn" id="add-subevent">Add Another Subevent</button>
+            </div>
+
             <button class="form-button" type="submit">Submit Festival</button>
+
+           
         </form>
     </div>
 </section>
+@push('scripts')
+<script>
+    document.getElementById('add-subevent').addEventListener('click', function() {
+        const container = document.querySelector('.subevents-section');
+        const subeventCount = document.querySelectorAll('.subevent').length + 1;
+        
+        const newSubevent = document.createElement('div');
+        newSubevent.className = 'subevent';
+        newSubevent.innerHTML = `
+            <div class="form-group">
+                <label for="subevent-time-${subeventCount}" class="form-label">Time</label>
+                <input type="text" id="subevent-time-${subeventCount}" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
+            </div>
+            <div class="form-group">
+                <label for="subevent-title-${subeventCount}" class="form-label">Title</label>
+                <input type="text" id="subevent-title-${subeventCount}" class="form-input" placeholder="e.g., Cultural Program">
+            </div>
+            <div class="form-group">
+                <label for="subevent-desc-${subeventCount}" class="form-label">Description</label>
+                <textarea id="subevent-desc-${subeventCount}" class="form-textarea" placeholder="Description of the subevent..."></textarea>
+            </div>
+        `;
+        
+        container.insertBefore(newSubevent, this);
+    });
+</script>
+@endpush
 
 @endsection
