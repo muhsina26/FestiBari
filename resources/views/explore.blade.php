@@ -101,7 +101,7 @@
                             @else
                                 <p>History info coming soon.</p>
                             @endif
-                            <a href="{{ url('/festivals/' . Str::slug($festival['name'])) }}" class="btn">View Details</a>
+                            <a href="/festival/{{ $loop->iteration }}" class="btn">View Details</a>
                         </div>
                     </div>
                 </div>
