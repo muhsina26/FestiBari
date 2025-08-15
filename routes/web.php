@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return view('home');
@@ -10,16 +14,16 @@ Route::get('/explore', function () {
     return view('explore');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
 
 
-Route::view('/submit','submit')->name('submit');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
+
+Route::view('/submit','submit')->name('submit')->middleware('auth');
 Route::view('/contact', 'contact')->name('contact');
 
 //Dummy add kore dekhi kaj kore ki na
