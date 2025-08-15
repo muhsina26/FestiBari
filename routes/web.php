@@ -26,6 +26,16 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::view('/submit','submit')->name('submit')->middleware('auth');
 Route::view('/contact', 'contact')->name('contact');
 
+
+// Authentication Routes
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
+
+Route::view('/submit','submit')->name('submit')->middleware('auth');
 //Dummy add kore dekhi kaj kore ki na
 Route::get('/festival/{id}', function($id) {
     $festivals = [
