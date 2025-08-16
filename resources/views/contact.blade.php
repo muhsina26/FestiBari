@@ -1,5 +1,5 @@
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
 @endpush
 
 
@@ -18,37 +18,58 @@
 </section>
 
 <!-- Contact Form Section -->
-<section class="submit-form-section"> 
+<section class="submit-form-section">
     <div class="form-container">
         <h2 class="form-title">Get In Touch</h2>
-        <form>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if($errors->any())
+            <div class="alert alert-error">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form method="POST" action="{{ route('contact.store') }}">
+            @csrf
             <div class="form-group">
                 <label for="name" class="form-label">Your Name</label>
-                <input type="text" id="name" class="form-input" placeholder="John Doe" required>
+                <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" value="{{ old('name') }}" required>
             </div>
             <div class="form-group">
                 <label for="email" class="form-label">Your Email</label>
-                <input type="email" id="email" class="form-input" placeholder="you@example.com" required>
+                <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" value="{{ old('email') }}" required>
             </div>
             <div class="form-group">
                 <label for="subject" class="form-label">Subject</label>
-                <input type="text" id="subject" class="form-input" placeholder="Feedback / Inquiry / etc." required>
+                <input type="text" id="subject" name="subject" class="form-input" placeholder="Feedback / Inquiry / etc." value="{{ old('subject') }}" required>
             </div>
             <div class="form-group">
                 <label for="message" class="form-label">Your Message</label>
-                <textarea id="message" class="form-textarea" placeholder="Write your message here..." required></textarea>
+                <textarea id="message" name="message" class="form-textarea" placeholder="Write your message here..." required>{{ old('message') }}</textarea>
             </div>
             <button type="submit" class="form-button">Send Message</button>
         </form>
     </div>
 </section>
 
-<!-- Contact Info Section (Optional) -->
-<section class="cta" >
+<!-- Contact Info Section -->
+<section class="cta">
     <div class="cta-content">
         <h2>Or reach us directly</h2>
-        <p>Email: <a href="mailto:support@festibari.com" style="color: #00bcd4;">support@festibari.com</a></p>
-        <p>Phone: <span style="color: #ccc;">+880 1XXX XXX XXX</span></p>
+        <div class="contact-info">
+            <p>
+                <i class="fas fa-envelope" style="margin-right: 10px; color: #ff4081;"></i>
+                Email: <a href="mailto:support@festibari.com" style="color: #00bcd4;">support@festibari.com</a>
+            </p>
+            <p>
+                <i class="fas fa-phone" style="margin-right: 10px; color: #ff4081;"></i>
+                Phone: <span style="color: #ccc;">+880 1XXX XXX XXX</span>
+            </p>
+        </div>
     </div>
 </section>
 
