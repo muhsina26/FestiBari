@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\FestivalController;
+use App\Http\Controllers\FestivalDetailsController;
 
 
 Route::get('/', function () {
@@ -23,7 +25,10 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 
-Route::view('/submit','submit')->name('submit')->middleware('auth');
+/// Festival submission route
+Route::post('/submit', [FestivalController::class, 'store'])->name('festival.store')->middleware('auth');
+
+Route::get('/festival/{id}', [FestivalDetailsController::class, 'show'])->name('festival.details');
 Route::view('/contact', 'contact')->name('contact');
 
 
