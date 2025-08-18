@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the festivals submitted by this user.
+     */
+    public function festivals()
+    {
+        return $this->hasMany(Festival::class);
+    }
 }
