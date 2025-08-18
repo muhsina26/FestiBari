@@ -7,7 +7,7 @@
 @section('content')
 <!-- Hero Section with Festival Image -->
 <section class="festival-hero">
-        <div class="hero-background" style="background-image: url('/images/{{ $image }}');">
+    <div class="hero-background" style="background-image: url('{{ $image }}');">
         <div class="hero-overlay">
             <div class="hero-content">
                 <nav class="breadcrumb">
@@ -18,7 +18,13 @@
                     <span>{{ $name }}</span>
                 </nav>
                 <h1 class="hero-title">{{ $name }}</h1>
-                <p class="hero-subtitle">{{ $description }}</p>
+                @if(false)
+                {{-- Intentionally hidden: description moved to explore card back --}}
+                <p class="hero-subtitle" style="display:none;">{{ $description }}</p>
+                @endif
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Main Content Section -->
@@ -28,69 +34,38 @@
             <!-- Left Column - Main Content -->
             <div class="main-content">
                 <!-- Festival Story -->
+                @if($description)
                 <div class="content-card">
                     <h2><i class="fas fa-book-open"></i> Festival Story</h2>
                     <div class="story-content">
-                        <p>{{ $description ?? 'Experience the vibrant celebration of ' . $name . ', a magnificent festival that brings together communities in joyous celebration. This festival is deeply rooted in cultural traditions and offers a unique glimpse into the rich heritage of Bangladesh.' }}</p>
-                        
-                        @if($name == 'Eid ul-Fitr')
-                            <p>Eid-ul-Fitr marks the end of Ramadan, the holy month of fasting in Islam. It is celebrated with prayers, charity, and festive meals, bringing families and communities together in a spirit of joy and gratitude.</p>
-                        @elseif($name == 'Durga Puja')
-                            <p>Durga Puja is a Hindu festival celebrating the goddess Durga's victory over the demon Mahishasura. It symbolizes the victory of good over evil and is celebrated with elaborate decorations, cultural performances, and community gatherings.</p>
-                        @elseif($name == 'Pohela Boishakh')
-                            <p>Pohela Boishakh is the Bengali New Year, celebrated with traditional food, fairs, and cultural activities. It marks the beginning of the Bengali calendar and is a time for new beginnings and cultural pride.</p>
-                        @else
-                            <p>This festival holds special significance in the cultural calendar, offering visitors an authentic experience of local traditions, customs, and community spirit.</p>
-                        @endif
+                        <p>{{ $description }}</p>
                     </div>
                 </div>
+                @endif
 
                 <!-- Program Schedule -->
                 @if(isset($events) && count($events) > 0)
                 <div class="content-card">
                     <h2><i class="fas fa-clock"></i> Program Schedule</h2>
                     <div class="timeline">
-                        @foreach($events as $event)
+            @foreach($events as $event)
                         <div class="timeline-item">
                             <div class="timeline-marker"></div>
                             <div class="timeline-content">
-                                <div class="timeline-time">{{ $event['time'] }}</div>
-                                <div class="timeline-title">{{ $event['title'] }}</div>
-                                <div class="timeline-desc">{{ $event['description'] }}</div>
+                <div class="timeline-time">{{ data_get($event, 'time') }}</div>
+                <div class="timeline-title">{{ data_get($event, 'title') }}</div>
+                <div class="timeline-desc">{{ data_get($event, 'description') }}</div>
                             </div>
                         </div>
                         @endforeach
                     </div>
                 </div>
                 @endif
-
-                <!-- Location Section -->
-                <div class="content-card">
-                    <h2><i class="fas fa-map-marker-alt"></i> Location & Directions</h2>
-                    <div class="location-content">
-                        <div class="location-map">
-                            <div class="map-placeholder">
-                                <i class="fas fa-map"></i>
-                                <h3>{{ $location }}</h3>
-                                <p>Interactive map coming soon</p>
-                            </div>
-                        </div>
-                        <div class="location-info">
-                            <div class="address-card">
-                                <h4>📍 Address</h4>
-                                <p>{{ $location }}, Bangladesh</p>
-                                <a href="https://maps.google.com/?q={{ urlencode($location) }}" target="_blank" class="directions-btn">
-                                    <i class="fas fa-directions"></i> Get Directions
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            
+            <!-- Right Column - Sidebar -->
             <div class="sidebar">
-                
+                <!-- Quick Info Card -->
                 <div class="sidebar-card">
                     <h3>Festival Info</h3>
                     <div class="info-grid">
@@ -125,19 +100,7 @@
                     </div>
                 </div>
 
-                
-                <div class="sidebar-card">
-                    <h3>Entry Information</h3>
-                    <div class="ticket-status">
-                        <div class="free-entry">
-                            <i class="fas fa-ticket-alt"></i>
-                            <span>Free Entry</span>
-                        </div>
-                        <p class="entry-note">No tickets required. Open to all visitors.</p>
-                    </div>
-                </div>
-
-                
+                <!-- Action Buttons -->
                 <div class="sidebar-card">
                     <div class="action-buttons">
                         <button class="action-btn primary">
@@ -152,7 +115,7 @@
                     </div>
                 </div>
 
-                
+                <!-- Weather Info (Placeholder) -->
                 <div class="sidebar-card">
                     <h3>Weather Forecast</h3>
                     <div class="weather-info">
@@ -174,7 +137,7 @@
 
 @push('scripts')
 <script>
-    
+    // Share functionality
     document.querySelector('.action-btn.secondary').addEventListener('click', function() {
         if (navigator.share) {
             navigator.share({
@@ -182,14 +145,15 @@
                 text: 'Check out this amazing festival: {{ $name }}',
                 url: window.location.href
             });
-        } else {// Fallback: copy to clipboard
+        } else {
+            // Fallback: copy to clipboard
             navigator.clipboard.writeText(window.location.href).then(function() {
                 alert('Link copied to clipboard!');
             });
         }
     });
 
-    
+    // Save festival functionality (placeholder)
     document.querySelector('.action-btn.primary').addEventListener('click', function() {
         this.innerHTML = '<i class="fas fa-check"></i> Saved!';
         this.style.background = 'rgba(76, 175, 80, 0.8)';

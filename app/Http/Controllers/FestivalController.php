@@ -27,31 +27,43 @@ class FestivalController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120'
         ]);
 
-        // Handle image upload
+        // image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('festival_images', 'public');
         }
 
-        // Handle subevents (if any)
+        
         $subevents = [];
-        if ($request->has('subevent_time') && $request->has('subevent_title')) {
-            $times = $request->input('subevent_time', []);
-            $titles = $request->input('subevent_title', []);
-            $descriptions = $request->input('subevent_description', []);
-
-            for ($i = 0; $i < count($times); $i++) {
-                if (!empty($times[$i]) && !empty($titles[$i])) {
+        $times = $request->input('subevent_time', []);
+        $titles = $request->input('subevent_title', []);
+        $descriptions = $request->input('subevent_description', []);
+//sub event na thakle process krbe na
+        
+        if (!empty($times) || !empty($titles) || !empty($descriptions)) {
+            $max = max(count($times), count($titles), count($descriptions));
+            for ($i = 0; $i < $max; $i++) {
+                $time = isset($times[$i]) ? trim((string)$times[$i]) : '';
+                $title = isset($titles[$i]) ? trim((string)$titles[$i]) : '';
+                $desc = isset($descriptions[$i]) ? trim((string)$descriptions[$i]) : '';
+                
+               
+                if ($time !== '' || $title !== '' || $desc !== '') {
                     $subevents[] = [
-                        'time' => $times[$i],
-                        'title' => $titles[$i],
-                        'description' => $descriptions[$i] ?? ''
+                        'time' => $time,
+                        'title' => $title,
+                        'description' => $desc,
                     ];
                 }
             }
         }
 
-        // Create the festival
+        
+        if (!empty($subevents)) {
+            \Log::info('Saving subevents:', ['subevents' => $subevents]);
+        }
+
+        
         $festival = Festival::create([
             'name' => $validated['festival_name'],
             'description' => $validated['description'],

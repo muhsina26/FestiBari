@@ -19,27 +19,51 @@
 
 <!-- Filter Section -->
 <section class="filters">
-    <form>
-        <input type="text" placeholder="Search by name...">
-        <select>
-            <option disabled selected>Filter by Religion</option>
-            <option>Islam</option>
-            <option>Hinduism</option>
-            <option>Christianity</option>
-            <option>Buddhism</option>
+    <form method="GET" action="{{ route('explore') }}">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name...">
+        
+        <select name="religion" onchange="this.form.submit()">
+            <option value="">Filter by Religion</option>
+            @if(isset($religions))
+                @foreach($religions as $religion)
+                    <option value="{{ $religion }}" {{ request('religion') == $religion ? 'selected' : '' }}>
+                        {{ $religion }}
+                    </option>
+                @endforeach
+            @else
+                <option value="Islam" {{ request('religion') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                <option value="Hinduism" {{ request('religion') == 'Hinduism' ? 'selected' : '' }}>Hinduism</option>
+                <option value="Christianity" {{ request('religion') == 'Christianity' ? 'selected' : '' }}>Christianity</option>
+                <option value="Buddhism" {{ request('religion') == 'Buddhism' ? 'selected' : '' }}>Buddhism</option>
+                <option value="Cultural" {{ request('religion') == 'Cultural' ? 'selected' : '' }}>Cultural</option>
+            @endif
         </select>
-        <select>
-            <option disabled selected>Filter by Location</option>
-            <option>Dhaka</option>
-            <option>Chattogram</option>
-            <option>Rajshahi</option>
-            <option>Sylhet</option>
+        
+        <select name="location" onchange="this.form.submit()">
+            <option value="">Filter by Location</option>
+            @if(isset($locations))
+                @foreach($locations as $location)
+                    <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>
+                        {{ $location }}
+                    </option>
+                @endforeach
+            @else
+                <option value="Dhaka" {{ request('location') == 'Dhaka' ? 'selected' : '' }}>Dhaka</option>
+                <option value="Chattogram" {{ request('location') == 'Chattogram' ? 'selected' : '' }}>Chattogram</option>
+                <option value="Rajshahi" {{ request('location') == 'Rajshahi' ? 'selected' : '' }}>Rajshahi</option>
+                <option value="Sylhet" {{ request('location') == 'Sylhet' ? 'selected' : '' }}>Sylhet</option>
+            @endif
         </select>
-        <select>
-            <option disabled selected>Filter by Time</option>
-            <option>Upcoming</option>
-            <option>Past</option>
+        
+        <select name="time" onchange="this.form.submit()">
+            <option value="">Filter by Time</option>
+            <option value="Upcoming" {{ request('time') == 'Upcoming' ? 'selected' : '' }}>Upcoming</option>
+            <option value="Past" {{ request('time') == 'Past' ? 'selected' : '' }}>Past</option>
         </select>
+        
+        @if(request()->hasAny(['search', 'religion', 'location', 'time']))
+            <a href="{{ route('explore') }}" style="background: #ff4081; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-left: 10px;">Clear Filters</a>
+        @endif
     </form>
 </section>
 
@@ -49,24 +73,20 @@
     <div class="cards-container">
         @php
             use Illuminate\Support\Str;
-            $demo = [
-                ['id'=>1,'name' => 'Eid-ul-Fitr', 'image' => 'eidd.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
-                ['id'=>2,'name' => 'Eid-ul-Adha', 'image' => 'Quarbani.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
-                ['id'=>3,'name' => 'Durga Puja', 'image' => 'DurgaPuja.jpg', 'location' => 'Dhaka, Barisal', 'date' => '2025-10-20', 'religion' => 'Hinduism'],
-                ['id'=>4,'name' => '21st February', 'image' => '21feb.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ];
-            $list = (isset($festivals) && count($festivals)) ? $festivals->map(function($f){
+            $list = isset($festivals) ? $festivals->map(function($f){
+                $districtDisplay = $f->district === 'other' ? 'Nationwide' : ucfirst($f->district ?? '');
                 return [
                     'id' => $f->id,
                     'name' => $f->name,
                     'image' => $f->image_path ? (Str::startsWith($f->image_path, 'http') ? $f->image_path : asset('storage/'.$f->image_path)) : asset('images/bg.jpg'),
-                    'location' => trim(($f->area ? $f->area.', ' : '').($f->district ?? '')) ?: 'Bangladesh',
+                    'location' => trim(($f->area ? $f->area.', ' : '').$districtDisplay) ?: 'Bangladesh',
                     'date' => optional($f->start_date)->format('Y-m-d'),
                     'religion' => $f->religion,
+                    'description' => $f->description,
                 ];
-            }) : collect($demo);
+            }) : collect([]);
         @endphp
-        @foreach ($list as $festival)
+        @forelse ($list as $festival)
         <div class="festival-card">
             <div class="flip-wrapper">
                 <div class="flip-inner">
@@ -85,15 +105,51 @@
                     <div class="flip-back">
                         <div class="festival-info">
                             <h3>History of {{ $festival['name'] }}</h3>
-                            <p>History info coming soon.</p>
-                           <a href="/festival/{{ $festival['id'] }}" class="btn">View Details</a>
+                            <p>{{ Str::limit($festival['description'] ?? 'History info coming soon.', 120) }}</p>
+                            <a href="/festival/{{ $festival['id'] }}" class="btn">View Details</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="no-festivals" style="text-align: center; padding: 40px; color: #666;">
+            <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+            <h3>No festivals found</h3>
+            <p>Try adjusting your search or filter criteria.</p>
+            @if(request()->hasAny(['search', 'religion', 'location', 'time']))
+                <a href="{{ route('explore') }}" style="background: #ff4081; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Show All Festivals</a>
+            @endif
+        </div>
+        @endforelse
     </div>
 </section>
+
+@push('scripts')
+<script>
+// Auto-submit search on Enter key
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('input[name="search"]');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+        
+        // Add search button functionality
+        searchInput.addEventListener('input', function() {
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                if (this.value.length >= 3 || this.value.length === 0) {
+                    this.form.submit();
+                }
+            }, 500); // Auto-search after 500ms of no typing
+        });
+    }
+});
+</script>
+@endpush
 
 @endsection

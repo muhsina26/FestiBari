@@ -40,6 +40,9 @@ Route::post('/submit', [FestivalController::class, 'store'])->name('festival.sto
 Route::get('/festival/{id}', [FestivalDetailsController::class, 'show'])->name('festival.details');
 
 
+    
+   
+
 
 
 // Backend approval endpoints (can be protected later)

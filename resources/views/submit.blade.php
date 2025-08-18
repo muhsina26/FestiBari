@@ -1,3 +1,4 @@
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
 @endpush
@@ -73,7 +74,7 @@
                                 <option value="jessore">Jessore</option>
                                 <option value="cumilla">Cumilla</option>
                                 <option value="bogura">Bogura</option>
-                                <option value="National">Other</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                     </div>
@@ -143,6 +144,7 @@
                     <option>Christianity</option>
                     <option>Buddhism</option>
                     <option>Cultural</option>
+                    <option>National</option>
                 </select>
             </div>
 
@@ -158,8 +160,6 @@
                         <span class="file-name"></span>
                         <button type="button" class="remove-file">&times;</button>
                     </div>
-                    <small class="help-text">Max size: 5 MB. Allowed: JPEG, PNG, JPG, GIF, WEBP.</small>
-                    <div id="image-size-error" class="alert alert-error" style="display:none;margin-top:8px;"></div>
                 </div>
             </div>
 
@@ -173,15 +173,15 @@
                 <div class="subevent">
                     <div class="form-group">
                         <label for="subevent-time-1" class="form-label">Time</label>
-                        <input type="text" id="subevent-time-1" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
+                        <input type="text" id="subevent-time-1" name="subevent_time[]" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
                     </div>
                     <div class="form-group">
                         <label for="subevent-title-1" class="form-label">Title</label>
-                        <input type="text" id="subevent-title-1" class="form-input" placeholder="e.g., Cultural Program">
+                        <input type="text" id="subevent-title-1" name="subevent_title[]" class="form-input" placeholder="e.g., Cultural Program">
                     </div>
                     <div class="form-group">
                         <label for="subevent-desc-1" class="form-label">Description</label>
-                        <textarea id="subevent-desc-1" class="form-textarea" placeholder="Description of the subevent..."></textarea>
+                        <textarea id="subevent-desc-1" name="subevent_description[]" class="form-textarea" placeholder="Description of the subevent..."></textarea>
                     </div>
                 </div>
                 <button type="button" class="secondary-btn" id="add-subevent">Add Another Subevent</button>
@@ -195,7 +195,7 @@
 </section>
 @push('scripts')
 <script>
-   
+    
     let currentLatitude = null;
     let currentLongitude = null;
 
@@ -214,7 +214,7 @@
                 document.getElementById('latitude').value = currentLatitude.toFixed(6);
                 document.getElementById('longitude').value = currentLongitude.toFixed(6);
                 
-               
+                
                 updateMapPlaceholder(currentLatitude, currentLongitude);
                 
                 btn.innerHTML = '<i class="fas fa-check"></i> Location Set!';
@@ -260,10 +260,10 @@
             return;
         }
         
-        
+        //simulate korsi karon API nai
         const searchQuery = `${area}, ${district}, Bangladesh`;
         
-       
+        // Dummy add korsi time pele implement krbo
         const cityCoordinates = {
             'Dhaka': { lat: 23.8103, lng: 90.4125 },
             'Chattogram': { lat: 22.3569, lng: 91.7832 },
@@ -278,7 +278,7 @@
         
         const coords = cityCoordinates[district];
         if (coords) {
-            // Add small random offset for area specificity
+            
             currentLatitude = coords.lat + (Math.random() - 0.5) * 0.1;
             currentLongitude = coords.lng + (Math.random() - 0.5) * 0.1;
             
@@ -319,14 +319,14 @@
             </div>
         `;
         
-        // Re-attach event listeners
+        
         document.getElementById('useMyLocation').addEventListener('click', arguments.callee.caller);
         document.getElementById('searchAddress').addEventListener('click', arguments.callee.caller);
     }
 
-    // Auto-fill coordinates when district/area changes
+    
     document.getElementById('district').addEventListener('change', function() {
-        // Clear coordinates when location changes
+        
         document.getElementById('latitude').value = '';
         document.getElementById('longitude').value = '';
         currentLatitude = null;
@@ -334,14 +334,14 @@
     });
 
     document.getElementById('area').addEventListener('input', function() {
-        // Clear coordinates when location changes
+       
         document.getElementById('latitude').value = '';
         document.getElementById('longitude').value = '';
         currentLatitude = null;
         currentLongitude = null;
     });
 
-    // File upload functionality (existing code)
+   
     const fileInput = document.getElementById('image');
     const fileLabel = document.querySelector('.file-upload-label');
     const fileInfo = document.querySelector('.file-info');
@@ -349,46 +349,22 @@
     const removeBtn = document.querySelector('.remove-file');
     const fileText = document.querySelector('.file-text');
 
-    const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-
     fileInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        const sizeError = document.getElementById('image-size-error');
         if (file) {
-            if (file.size > MAX_SIZE_BYTES) {
-                sizeError.textContent = 'Selected image is larger than 5 MB. Please choose a smaller file.';
-                sizeError.style.display = 'block';
-                fileInput.value = '';
-                fileLabel.style.display = 'flex';
-                fileInfo.style.display = 'none';
-                return;
-            } else {
-                sizeError.style.display = 'none';
-            }
-            fileName.textContent = file.name + ` (${(file.size/1024/1024).toFixed(2)} MB)`;
+            fileName.textContent = file.name;
             fileLabel.style.display = 'none';
             fileInfo.style.display = 'flex';
         }
     });
 
     removeBtn.addEventListener('click', function() {
-        const sizeError = document.getElementById('image-size-error');
-        sizeError.style.display = 'none';
+        fileInput.value = '';
+        fileLabel.style.display = 'flex';
+        fileInfo.style.display = 'none';
     });
 
-    // Prevent submit if no file or oversized
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const file = fileInput.files[0];
-        const sizeError = document.getElementById('image-size-error');
-        if (!file) return; // required handles empty
-        if (file.size > MAX_SIZE_BYTES) {
-            e.preventDefault();
-            sizeError.textContent = 'Selected image is larger than 5 MB. Please choose a smaller file.';
-            sizeError.style.display = 'block';
-        }
-    });
-
-    // Drag and drop functionality (existing code)
+   
     let dragCounter = 0;
 
     fileLabel.addEventListener('dragenter', function(e) {
@@ -429,25 +405,25 @@
         }
     });
 
-    // Add subevent functionality
+    // subevent functionality
     document.getElementById('add-subevent').addEventListener('click', function() {
         const container = document.querySelector('.subevents-section');
         const subeventCount = document.querySelectorAll('.subevent').length + 1;
         
         const newSubevent = document.createElement('div');
         newSubevent.className = 'subevent';
-        newSubevent.innerHTML = `
+    newSubevent.innerHTML = `
             <div class="form-group">
                 <label for="subevent-time-${subeventCount}" class="form-label">Time</label>
-                <input type="text" id="subevent-time-${subeventCount}" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
+        <input type="text" id="subevent-time-${subeventCount}" name="subevent_time[]" class="form-input" placeholder="e.g., 9:00 AM - 10:00 AM">
             </div>
             <div class="form-group">
                 <label for="subevent-title-${subeventCount}" class="form-label">Title</label>
-                <input type="text" id="subevent-title-${subeventCount}" class="form-input" placeholder="e.g., Cultural Program">
+        <input type="text" id="subevent-title-${subeventCount}" name="subevent_title[]" class="form-input" placeholder="e.g., Cultural Program">
             </div>
             <div class="form-group">
                 <label for="subevent-desc-${subeventCount}" class="form-label">Description</label>
-                <textarea id="subevent-desc-${subeventCount}" class="form-textarea" placeholder="Description of the subevent..."></textarea>
+        <textarea id="subevent-desc-${subeventCount}" name="subevent_description[]" class="form-textarea" placeholder="Description of the subevent..."></textarea>
             </div>
         `;
         
