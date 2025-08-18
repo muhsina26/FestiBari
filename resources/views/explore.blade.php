@@ -47,31 +47,32 @@
 <section class="festival-grid">
     <h2>Featured Festivals</h2>
     <div class="cards-container">
-        @foreach ([
-             ['name' => 'Eid-ul-Fitr', 'image' => 'eidd.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
-            ['name' => 'Eid-ul-Adha', 'image' => 'Quarbani.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
-            ['name' => 'Durga Puja', 'image' => 'DurgaPuja.jpg', 'location' => 'Dhaka, Barisal', 'date' => '2025-10-20', 'religion' => 'Hinduism'],
-            ['name' => '21st February', 'image' => '21feb.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Nabanna Utsab', 'image' => 'Nabannautsab.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'BookFair', 'image' => 'boimela.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Pohela Boishakh', 'image' => 'PohelaBoishakh.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Boishakhi Mela', 'image' => 'Boishakhimela.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Buddha Purnima', 'image' => 'Budda.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Christmas', 'image' => 'Christmas.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Shadinota Dibos', 'image' => 'Independenceday.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Kite Festival', 'image' => 'Kite.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Lalon Mela', 'image' => 'lalonMela.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Pitha Utsab', 'image' => 'pithaUtsab.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Poush Mela', 'image' => 'PoushMela.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Banijjo Mela', 'image' => 'tradeFair.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-            ['name' => 'Bijoy Dibos', 'image' => 'victory day.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
-        ] as $festival)
+        @php
+            use Illuminate\Support\Str;
+            $demo = [
+                ['id'=>1,'name' => 'Eid-ul-Fitr', 'image' => 'eidd.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
+                ['id'=>2,'name' => 'Eid-ul-Adha', 'image' => 'Quarbani.jpg', 'location' => 'Nationwide', 'date' => '2025-04-22', 'religion' => 'Islam'],
+                ['id'=>3,'name' => 'Durga Puja', 'image' => 'DurgaPuja.jpg', 'location' => 'Dhaka, Barisal', 'date' => '2025-10-20', 'religion' => 'Hinduism'],
+                ['id'=>4,'name' => '21st February', 'image' => '21feb.jpg', 'location' => 'Jessore', 'date' => '2025-11-15', 'religion' => 'Cultural'],
+            ];
+            $list = (isset($festivals) && count($festivals)) ? $festivals->map(function($f){
+                return [
+                    'id' => $f->id,
+                    'name' => $f->name,
+                    'image' => $f->image_path ? (Str::startsWith($f->image_path, 'http') ? $f->image_path : asset('storage/'.$f->image_path)) : asset('images/bg.jpg'),
+                    'location' => trim(($f->area ? $f->area.', ' : '').($f->district ?? '')) ?: 'Bangladesh',
+                    'date' => optional($f->start_date)->format('Y-m-d'),
+                    'religion' => $f->religion,
+                ];
+            }) : collect($demo);
+        @endphp
+        @foreach ($list as $festival)
         <div class="festival-card">
             <div class="flip-wrapper">
                 <div class="flip-inner">
                     <!-- FRONT SIDE -->
                     <div class="flip-front">
-                        <img src="/images/{{ $festival['image'] }}" alt="{{ $festival['name'] }}">
+                        <img src="{{ is_string($festival['image']) ? $festival['image'] : '/images/'.$festival['image'] }}" alt="{{ $festival['name'] }}">
                         <div class="festival-info">
                             <h3>{{ $festival['name'] }}</h3>
                             <p><i class="fas fa-calendar-alt"></i> {{ $festival['date'] }}</p>
@@ -84,24 +85,8 @@
                     <div class="flip-back">
                         <div class="festival-info">
                             <h3>History of {{ $festival['name'] }}</h3>
-                            @if($festival['name'] == 'Eid-ul-Fitr')
-                                <p>
-                                    Eid-ul-Fitr marks the end of Ramadan, the holy month of fasting in Islam.
-                                    It is celebrated with prayers, charity, and festive meals.
-                                </p>
-                            @elseif($festival['name'] == 'Durga Puja')
-                                <p>
-                                    Durga Puja is a Hindu festival celebrating the goddess Durga's victory over the demon Mahishasura.
-                                    It symbolizes the victory of good over evil.
-                                </p>
-                            @elseif($festival['name'] == 'Pohela Boishakh')
-                                <p>
-                                    Pohela Boishakh is the Bengali New Year, celebrated with traditional food, fairs, and cultural activities.
-                                </p>
-                            @else
-                                <p>History info coming soon.</p>
-                            @endif
-                            <a href="/festival/{{ $loop->iteration }}" class="btn">View Details</a>
+                            <p>History info coming soon.</p>
+                           <a href="/festival/{{ $festival['id'] }}" class="btn">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -110,17 +95,5 @@
         @endforeach
     </div>
 </section>
-
-<!-- Story Mode Section
-<section class="festival-stories">
-    <h2>Festival Stories</h2>
-    <div class="story-container">
-        <div class="story">
-            <h3>A Day in Pahela Baishakh</h3>
-            <p>Explore the joy, colors, and emotions of Bengali New Year through an immersive storytelling experience.</p>
-        </div>
-        More stories can be added -->
-    <!-- </div>
-</section> -->
 
 @endsection

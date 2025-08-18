@@ -1,4 +1,3 @@
-
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
 @endpush
@@ -74,7 +73,7 @@
                                 <option value="jessore">Jessore</option>
                                 <option value="cumilla">Cumilla</option>
                                 <option value="bogura">Bogura</option>
-                                <option value="other">Other</option>
+                                <option value="National">Other</option>
                             </select>
                         </div>
                     </div>
@@ -159,6 +158,8 @@
                         <span class="file-name"></span>
                         <button type="button" class="remove-file">&times;</button>
                     </div>
+                    <small class="help-text">Max size: 5 MB. Allowed: JPEG, PNG, JPG, GIF, WEBP.</small>
+                    <div id="image-size-error" class="alert alert-error" style="display:none;margin-top:8px;"></div>
                 </div>
             </div>
 
@@ -348,19 +349,43 @@
     const removeBtn = document.querySelector('.remove-file');
     const fileText = document.querySelector('.file-text');
 
+    const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+
     fileInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
+        const sizeError = document.getElementById('image-size-error');
         if (file) {
-            fileName.textContent = file.name;
+            if (file.size > MAX_SIZE_BYTES) {
+                sizeError.textContent = 'Selected image is larger than 5 MB. Please choose a smaller file.';
+                sizeError.style.display = 'block';
+                fileInput.value = '';
+                fileLabel.style.display = 'flex';
+                fileInfo.style.display = 'none';
+                return;
+            } else {
+                sizeError.style.display = 'none';
+            }
+            fileName.textContent = file.name + ` (${(file.size/1024/1024).toFixed(2)} MB)`;
             fileLabel.style.display = 'none';
             fileInfo.style.display = 'flex';
         }
     });
 
     removeBtn.addEventListener('click', function() {
-        fileInput.value = '';
-        fileLabel.style.display = 'flex';
-        fileInfo.style.display = 'none';
+        const sizeError = document.getElementById('image-size-error');
+        sizeError.style.display = 'none';
+    });
+
+    // Prevent submit if no file or oversized
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const file = fileInput.files[0];
+        const sizeError = document.getElementById('image-size-error');
+        if (!file) return; // required handles empty
+        if (file.size > MAX_SIZE_BYTES) {
+            e.preventDefault();
+            sizeError.textContent = 'Selected image is larger than 5 MB. Please choose a smaller file.';
+            sizeError.style.display = 'block';
+        }
     });
 
     // Drag and drop functionality (existing code)

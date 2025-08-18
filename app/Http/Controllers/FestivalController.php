@@ -23,7 +23,8 @@ class FestivalController extends Controller
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'religion' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            // Allow images up to 5MB; include common formats
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120'
         ]);
 
         // Handle image upload
