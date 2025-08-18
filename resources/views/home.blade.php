@@ -42,17 +42,13 @@
     <h2>Festival Highlights</h2>
     <div class="highlight-cards">
         @forelse($festivals as $festival)
-            <div class="card">
-                <img src="{{ $festival->image_url }}" alt="{{ $festival->name }}">
-                <h3>
-                    <a href="{{ route('festival.details', $festival->id) }}" style="color: inherit; text-decoration: none;">
-                        {{ $festival->name }}
-                    </a>
-                </h3>
-                <p style="color: #666; font-size: 0.9em; margin-top: 8px;">
-                    <i class="fas fa-map-marker-alt"></i> {{ $festival->location }}
-                </p>
-            </div>
+            <a href="{{ route('festival.details', $festival->id) }}" style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    <img src="{{ $festival->image_url }}" alt="{{ $festival->name }}">
+                    <h3>{{ $festival->name }}</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> {{ $festival->location }}</p>
+                </div>
+            </a>
         @empty
             <div class="card">
                 <img src="/images/bg.jpg" alt="No festivals">
