@@ -63,7 +63,7 @@
                 @endif
             </div>
 
-            <!-- Right Column - Sidebar -->
+        
             <div class="sidebar">
                 <!-- Quick Info Card -->
                 <div class="sidebar-card">
@@ -94,13 +94,13 @@
                             <i class="fas fa-praying-hands"></i>
                             <div>
                                 <span class="info-label">Type</span>
-                                <span class="info-value">{{ $category ?? 'Cultural' }}</span>
+                                <span class="info-value">{{ $category ?? 'Cultural' }}</span>  <!-- set na thakle default cultural -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+        
                 <div class="sidebar-card">
                     <div class="action-buttons">
                         <button class="action-btn primary">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <!-- Weather Info (Placeholder) -->
+                
                 <div class="sidebar-card">
                     <h3>Weather Forecast</h3>
                     <div class="weather-info">
@@ -137,7 +137,7 @@
 
 @push('scripts')
 <script>
-    // Share functionality
+    
     document.querySelector('.action-btn.secondary').addEventListener('click', function() {
         if (navigator.share) {
             navigator.share({
@@ -146,7 +146,7 @@
                 url: window.location.href
             });
         } else {
-            // Fallback: copy to clipboard
+            
             navigator.clipboard.writeText(window.location.href).then(function() {
                 alert('Link copied to clipboard!');
             });

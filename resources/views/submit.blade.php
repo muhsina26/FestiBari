@@ -318,7 +318,7 @@
                 </button>
             </div>
         `;
-        
+        //sob kisu ager moton
         
         document.getElementById('useMyLocation').addEventListener('click', arguments.callee.caller);
         document.getElementById('searchAddress').addEventListener('click', arguments.callee.caller);

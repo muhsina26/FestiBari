@@ -27,7 +27,7 @@ class FestivalDetailsController extends Controller
         $category = $festival->religion ?: 'Cultural';
         $duration = $this->computeDuration($festival->start_date, $festival->end_date);
        
-        $rawSubevents = $festival->subevents;
+        $rawSubevents = $festival->subevents; //Festival model theke subevent antesi
         $events = is_array($rawSubevents)
             ? $rawSubevents
             : (is_string($rawSubevents) ? (json_decode($rawSubevents, true) ?: []) : []);

@@ -67,7 +67,7 @@
             </p>
             <p>
                 <i class="fas fa-phone" style="margin-right: 10px; color: #ff4081;"></i>
-                Phone: <span style="color: #ccc;">+880 1XXX XXX XXX</span>
+                Phone: <span style="color: #ccc;">+880 1781241977</span>
             </p>
         </div>
     </div>

@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    
+    //same same login er moton
     protected $redirectTo = '/';
-
+    // jara login kore nai tara registration form dekhte pabe
     public function __construct()
     {
         
@@ -29,7 +29,7 @@ class RegisterController extends Controller
     
     public function register(Request $request)
     {
-        
+       //sob guli input validate kortese
         $validator = $this->validator($request->all());
         
         if ($validator->fails()) {
@@ -41,7 +41,7 @@ class RegisterController extends Controller
         
         $user = $this->create($request->all());
 
-        
+        //simply user create kortese
         Auth::login($user);
 
         

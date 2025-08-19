@@ -20,11 +20,11 @@
     </div>
 @endif
 
-                {{-- ✅ Begin working Laravel form --}}
+                
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    {{-- ✅ Email --}}
+                    
                     <div class="form-group">
                         <label class="form-label" for="email">Email Address</label>
                         <div class="input-icon">
@@ -37,7 +37,7 @@
                         @enderror
                     </div>
 
-                    {{-- ✅ Password --}}
+                    
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
                         <div class="input-icon">
@@ -49,7 +49,7 @@
                         @enderror
                     </div>
 
-                    {{-- ✅ Remember Me + Forgot Password --}}
+                    
                     <div class="form-options">
                         <label class="remember">
                             <input type="checkbox" name="remember"> Remember me
@@ -57,7 +57,7 @@
                         <a href="#" class="forgot-password">Forgot Password?</a>
                     </div>
 
-                    {{-- ✅ Submit Button --}}
+                    
                     <button type="submit" class="btn auth-btn">Login</button>
 
                     <div class="divider">or continue with</div>
@@ -75,7 +75,7 @@
                         Don't have an account? <a href="{{ route('register') }}">Sign Up</a>
                     </div>
                 </form>
-                {{-- ✅ End form --}}
+                
             </div>
         </div>
     </div>

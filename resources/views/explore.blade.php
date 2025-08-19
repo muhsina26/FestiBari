@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (this.value.length >= 3 || this.value.length === 0) {
                     this.form.submit();
                 }
-            }, 500); // Auto-search after 500ms of no typing
+            }, 500); 
         });
     }
 });
